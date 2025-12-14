@@ -1,0 +1,456 @@
+`html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IGNITE — Онлайн‑запись</title>
+  <meta name="description" content="IGNITE — онлайн‑запись на тюнинг, сервис и диагностику. Beyond limits. Above all." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0A0A0A;
+      --panel:#111213;
+      --text:#F5F6F7;
+      --muted:#A9AFB8;
+      --accent:#FF3B30; / динамичный акцент /
+      --accent-2:#1E90FF; / вторичный акцент для фокуса /
+      --success:#2ECC71;
+      --error:#FF5555;
+      --border:#1C1D20;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#000 0%, var(--bg) 100%);
+      color:var(--text);
+    }
+
+    / Header / Hero /
+    .hero{
+      position:relative;
+      padding:56px 24px 40px;
+      background:
+        radial-gradient(1200px 500px at 10% -50%, rgba(255,59,48,.20) 0%, transparent 60%),
+        radial-gradient(900px 400px at 90% -60%, rgba(30,144,255,.18) 0%, transparent 65%);
+      border-bottom:1px solid var(--border);
+      overflow:hidden;
+    }
+    .hero-inner{
+      max-width:1120px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:24px;
+      align-items:center;
+    }
+    @media (max-width:960px){
+      .hero-inner{grid-template-columns:1fr}
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .brand-mark{
+      width:44px;height:44px;border-radius:12px;
+      background:
+        conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent), var(--accent-2));
+      box-shadow:0 6px 18px rgba(255,59,48,.25);
+    }
+    .brand-name{
+      font-weight:800;letter-spacing:.06em;font-size:26px;
+    }
+    .tagline{
+      color:var(--muted);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .hero-title{
+      font-size:36px;line-height:1.15;margin:14px 0 12px;font-weight:800;
+    }
+    .hero-sub{
+      color:var(--muted);font-size:16px;line-height:1.7;max-width:60ch;
+    }
+
+    / Layout /
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 24px 80px}
+    .grid{
+      display:grid;grid-template-columns:1fr .9fr;gap:24px
+    }
+    @media (max-width:960px){.grid{grid-template-columns:1fr}}
+
+    / Cards / sections /
+    .card{
+      background:linear-gradient(180deg, #111 0%, #0E0F10 60%);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .card-header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:18px 20px;border-bottom:1px solid var(--border)
+    }
+    .card-title{font-weight:700;font-size:18px}
+    .card-body{padding:20px}
+
+    / Service chips /
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border:1px solid var(--border);border-radius:12px;
+      background:#101114;color:var(--text);cursor:pointer;user-select:none;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .chip input{display:none}
+    .chip.active{border-color:var(--accent);background:#151316}
+    .chip:hover{transform:translateY(-1px)}
+
+    / Form /
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+    @media (max-width:720px){.form-row{grid-template-columns:1fr}} 
+    .form-field{display:flex;flex-direction:column;gap:8px}
+    .label{color:var(--muted);font-size:13px}
+    .input, .select, .textarea{
+      width:100%;padding:12px 14px;background:#0C0D0F;color:var(--text);
+      border:1px solid var(--border);border-radius:12px;outline:none;
+      transition:border-color .12s ease, box-shadow .12s ease;
+    }
+    .input:focus, .select:focus, .textarea:focus{
+      border-color:var(--accent-2);
+      box-shadow:0 0 0 3px rgba(30,144,255,.18)
+    }
+    .textarea{min-height:110px;resize:vertical}
+    .help{color:var(--muted);font-size:12px}
+
+    / Actions /
+    .actions{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 16px;border-radius:12px;border:1px solid transparent;
+      font-weight:700;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, background .12s ease
+    }
+    .btn-primary{
+      background:linear-gradient(180deg, var(--accent) 0%, #C92B23 100%);
+      color:white;box-shadow:0 8px 20px rgba(255,59,48,.30)
+    }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-secondary{
+      background:#121316;color:var(--text);border-color:var(--border)
+    }
+
+    / Summary /
+    .summary{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:720px){.summary{grid-template-columns:1fr}}
+    .summary-item{padding:12px;border:1px dashed var(--border);border-radius:12px;background:#0C0D0F}
+    .summary-label{color:var(--muted);font-size:12px}
+    .summary-value{font-weight:700;margin-top:4px}
+
+    / Toasts /
+    .toast{
+      position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
+      background:#0D1216;border:1px solid var(--border);color:var(--text);
+      padding:12px 16px;border-radius:12px;box-shadow:var(--shadow);display:none
+    }
+    .toast.success{border-color:rgba(46,204,113,.4)}
+    .toast.error{border-color:rgba(255,85,85,.5)}
+
+    / Footer /
+    footer{
+      padding:28px 24px;color:var(--muted);border-top:1px solid var(--border);
+      background:#0A0B0D;text-align:center
+    }
+    .logo-word{
+      font-weight:800;letter-spacing:.12em
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero" aria-label="IGNITE">
+    <div class="hero-inner">
+      <div>
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div class="brand-name">IGNITE</div>
+        </div>
+        <div class="tagline">BEYOND LIMITS. ABOVE ALL.</div>
+        <h1 class="hero-title">Запишитесь на сервис и тюнинг онлайн</h1>
+        <p class="hero-sub">
+          Профессиональная настройка, диагностика и обслуживание спортивных авто.
+          Выберите услугу, дату и время — мы подтвердим запись и подготовим площадку.
+        </p>
+      </div>
+      <div class="card" aria-label="Краткая информация">
+        <div class="card-header">
+          <div class="card-title">Что вас ждёт</div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Точная работа:</strong> стенды, измерения и поузловая диагностика.</li>
+            <li><strong>Прозрачность:</strong> согласование этапов и бюджета до начала работ.</li>
+            <li><strong>Комфорт:</strong> зона ожидания и онлайн‑статус по вашему авто.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- Booking card -->
+      <section class="card" aria-label="Онлайн-запись">
+        <div class="card-header">
+          <div class="card-title">Онлайн‑запись</div>
+          <small class="tagline">Меньше слов — больше скорости</small>
+        </div>
+        <div class="card-body">
+          <!-- Services -->
+          <div class="form-field" role="group" aria-labelledby="services-label">
+            <div id="services-label" class="label">Выберите услугу</div>
+            <div class="chips" id="serviceChips">
+              <label class="chip"><input type="checkbox" value="Диагностика"><span>Диагностика</span></label>
+              <label class="chip"><input type="checkbox" value="Прошивка ECU"><span>Прошивка ECU</span></label>
+              <label class="chip"><input type="checkbox" value="Чип‑тюнинг"><span>Чип‑тюнинг</span></label>
+              <label class="chip"><input type="checkbox" value="Тормозная система"><span>Тормозная система</span></label>
+              <label class="chip"><input type="checkbox" value="Подвеска"><span>Подвеска</span></label>
+              <label class="chip"><input type="checkbox" value="Выхлоп"><span>Выхлоп</span></label>
+              <label class="chip"><input type="checkbox" value="Аэродинамика"><span>Аэродинамика</span></label>
+            </div>
+            <div class="help">Можно выбрать несколько услуг</div>
+          </div>
+
+          <!-- Form -->
+          <form id="bookingForm" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="label" for="date">Дата</label>
+                <input class="input" type="date" id="date" required />
+              </div>
+              <div class="form-field">
+                <label class="label" for="time">Время</label>
+                <input class="input" type="time" id="time" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="label" for="name">Ваше имя</label>
+                <input class="input" type="text" id="name" placeholder="Иван" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label class="label" for="phone">Телефон</label>
+                <input class="input" type="tel" id="phone" placeholder="+375 XX XXX‑XX‑XX" autocomplete="tel" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="label" for="email">Email</label>
+                <input class="input" type="email" id="email" placeholder="you@example.com" autocomplete="email" />
+              </div>
+              <div class="form-field">
+                <label class="label" for="city">Город</label>
+                <input class="input" type="text" id="city" placeholder="Барановичи" autocomplete="address-level2" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="label" for="brand">Марка</label>
+                <input class="input" type="text" id="brand" placeholder="BMW, Audi, Porsche…" required />
+              </div>
+              <div class="form-field">
+                <label class="label" for="model">Модель</label>
+                <input class="input" type="text" id="model" placeholder="M2, RS3, 911…" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="label" for="year">Год выпуска</label>
+                <input class="input" type="number" id="year" min="1980" max="2026" placeholder="2020" />
+              </div>
+              <div class="form-field">
+                <label class="label" for="vin">VIN (опционально)</label>
+                <input class="input" type="text" id="vin" placeholder="WAUZZZ…" />
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="label" for="notes">Комментарий</label>
+              <textarea class="textarea" id="notes" placeholder="Особенности авто, желаемые доработки, бюджет…"></textarea>
+            </div>
+            <!-- Summary -->
+            <div class="summary" aria-label="Итоги записи">
+              <div class="summary-item">
+                <div class="summary-label">Выбранные услуги</div>
+                <div class="summary-value" id="summaryServices">—</div>
+              </div>
+              <div class="summary-item">
+                <div class="summary-label">Дата и время</div>
+                <div class="summary-value" id="summaryWhen">—</div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Записаться</button>
+              <button type="button" class="btn btn-secondary" id="clearBtn">Сбросить</button>
+            </div>
+            <div class="help">Отправляя форму, вы соглашаетесь с обработкой данных согласно политике конфиденциальности.</div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Contact / Info card -->
+      <aside class="card" aria-label="Контакты и время работы">
+        <div class="card-header">
+          <div class="card-title">Контакты</div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Телефон:</strong> +375 (XX) XXX‑XX‑XX</li>
+            <li><strong>Email:</strong> team@ignite.auto</li>
+            <li><strong>Адрес:</strong> Барановичи, Брестская область</li>
+          </ul>
+          <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+          <ul>
+            <li><strong>График:</strong> Пн–Сб, 09:00–20:00</li>
+            <li><strong>Срочные работы:</strong> по согласованию</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <div class="logo-word">IGNITE</div>
+    <div class="tagline">BEYOND LIMITS. ABOVE ALL.</div>
+    <small>© 2025 IGNITE. Все права защищены.</small>
+  </footer>
+
+  <script>
+    // Chip interactions
+    const chips = document.querySelectorAll('.chip');
+    const summaryServices = document.getElementById('summaryServices');
+    chips.forEach(chip=>{
+      const input = chip.querySelector('input');
+      chip.addEventListener('click', ()=>{
+        input.checked = !input.checked;
+        chip.classList.toggle('active', input.checked);
+        updateSummary();
+      });
+    });
+
+    // DateTime summary
+    const dateEl = document.getElementById('date');
+    const timeEl = document.getElementById('time');
+    const summaryWhen = document.getElementById('summaryWhen');
+    [dateEl, timeEl].forEach(el=>el.addEventListener('input', updateSummary));
+
+    function updateSummary(){
+      const selected = Array.from(document.querySelectorAll('.chip input:checked')).map(i=>i.value);
+      summaryServices.textContent = selected.length ? selected.join(', ') : '—';
+      const d = dateEl.value, t = timeEl.value;
+      summaryWhen.textContent = (d && t) ? formatDateTime(d, t) : '—';
+    }
+    function formatDateTime(dateStr, timeStr){
+      const [y,m,d] = dateStr.split('-').map(Number);
+      const [hh,mm] = timeStr.split(':').map(Number);
+      const dt = new Date(y, m-1, d, hh, mm);
+      const fmt = new Intl.DateTimeFormat('ru-RU', { weekday:'short', day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
+      return fmt.format(dt).replace(',', '');
+    }
+
+    // Form handling
+    const form = document.getElementById('bookingForm');
+    const toast = document.getElementById('toast');
+    const clearBtn = document.getElementById('clearBtn');
+
+    clearBtn.addEventListener('click', ()=>{
+      form.reset();
+      document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('active'); c.querySelector('input').checked=false;});
+      updateSummary();
+      showToast('Форма очищена', 'success');
+    });
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const payload = collectPayload();
+      const errors = validatePayload(payload);
+      if(errors.length){
+        showToast(errors[0], 'error');
+        return;
+      }
+      try{
+        // Замените URL на ваш реальный эндпоинт
+        const res = await fetch('/api/booking', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(payload)
+        });
+        if(!res.ok) throw new Error('Ошибка сервера');
+        showToast('Заявка отправлена. Мы свяжемся для подтверждения!', 'success');
+        form.reset();
+        document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('active'); c.querySelector('input').checked=false;});
+        updateSummary();
+      }catch(err){
+        showToast('Не удалось отправить. Попробуйте позже.', 'error');
+      }
+    });
+
+    function collectPayload(){
+      const services = Array.from(document.querySelectorAll('.chip input:checked')).map(i=>i.value);
+      return {
+        services,
+        date: dateEl.value,
+        time: timeEl.value,
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        car: {
+          brand: document.getElementById('brand').value.trim(),
+          model: document.getElementById('model').value.trim(),
+          year: document.getElementById('year').value.trim(),
+          vin: document.getElementById('vin').value.trim()
+        },
+        notes: document.getElementById('notes').value.trim(),
+        source: 'ignite-website',
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    function validatePayload(p){
+      const errs = [];
+      if(!p.services || !p.services.length) errs.push('Выберите хотя бы одну услугу.');
+      if(!p.date) errs.push('Укажите дату.');
+      if(!p.time) errs.push('Укажите время.');
+      if(!p.name) errs.push('Введите ваше имя.');
+      if(!p.phone || p.phone.replace(/\D/g,'').length < 9) errs.push('Проверьте номер телефона.');
+      if(!p.car.brand) errs.push('Укажите марку авто.');
+      if(!p.car.model) errs.push('Укажите модель авто.');
+      return errs;
+    }
+
+    function showToast(msg, type='success'){
+      toast.textContent = msg;
+      toast.className = 'toast ' + type;
+      toast.style.display = 'block';
+      setTimeout(()=>{ toast.style.display = 'none'; }, 3500);
+    }
+
+    // Init summary
+    updateSummary();
+  </script>
+</body>
+</html>
+`
